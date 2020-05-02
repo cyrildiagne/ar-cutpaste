@@ -1,0 +1,9 @@
+venv
+.vscode
+.DS_Store
+.pyc
+node_modules
+__pycache__
+server/*.png
+server/*.jpg
+*.psd
