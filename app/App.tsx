@@ -9,7 +9,7 @@ import {
 import * as ImageManipulator from "expo-image-manipulator";
 import { Camera } from "expo-camera";
 
-// import ProgressIndicator from "./components/ProgressIndicator";
+import ProgressIndicator from "./components/ProgressIndicator";
 import server from "./components/Server";
 
 const styles = StyleSheet.create({
@@ -66,9 +66,15 @@ export default function App() {
     console.log("");
     console.log("Cut");
 
+    console.log(camera.pictureSize);
+    // const ratios = await camera.getSupportedRatiosAsync()
+    // console.log(ratios)
+    // const sizes = await camera.getAvailablePictureSizeAsync("2:1")
+    // console.log(sizes)
+
     console.log("> taking image...");
-    // const opts = { skipProcessing: true, exif: false };
-    const opts = {};
+    const opts = { skipProcessing: true, exif: false, quality: 0 };
+    // const opts = {};
     let photo = await camera.takePictureAsync(opts);
 
     console.log("> resizing...");
@@ -77,6 +83,10 @@ export default function App() {
       [
         { resize: { width: 256, height: 512 } },
         { crop: { originX: 0, originY: 128, width: 256, height: 256 } },
+        // { resize: { width: 256, height: 457 } },
+        // { crop: { originX: 0, originY: 99, width: 256, height: 256 } },
+        // { resize: { width: 256, height: 341 } },
+        // { crop: { originX: 0, originY: 42, width: 256, height: 256 } },
       ]
       // { compress: 0, format: ImageManipulator.SaveFormat.JPEG, base64: false }
     );
@@ -100,17 +110,22 @@ export default function App() {
 
     console.log("> resizing...");
     const { uri } = await ImageManipulator.manipulateAsync(photo.uri, [
-      { resize: { width: 512, height: 1024 } },
+      // { resize: { width: 512, height: 1024 } },
+      { resize: { width: 350, height: 700 } },
     ]);
 
     console.log("> sending to /paste...");
     try {
       const resp = await server.paste(uri);
       if (resp.status !== "ok") {
-        throw new Error(resp)
+        if (resp.status === "screen not found") {
+          console.log("screen not found");
+        } else {
+          throw new Error(resp);
+        }
       }
-    } catch(e) {
-      console.error('error pasting:', e);
+    } catch (e) {
+      console.error("error pasting:", e);
     }
 
     console.log(`Done in ${((Date.now() - start) / 1000).toFixed(3)}s`);
@@ -120,14 +135,19 @@ export default function App() {
     setPressed(true);
 
     const resp = await cut();
+
+    // Check if we're still pressed.
+    // if (pressed) {
     setState({ ...state, currImgSrc: resp });
+    // }
   }
 
   async function onPressOut() {
     setPressed(false);
-    if (state.currImgSrc) {
+
+    if (state.currImgSrc !== "") {
       await paste();
-      setState({ ...state, currImgSrc: null });
+      setState({ ...state, currImgSrc: "" });
     }
   }
 
@@ -138,13 +158,23 @@ export default function App() {
     return <Text>No access to camera</Text>;
   }
 
+  let camOpacity = 1;
+  if (pressed && state.currImgSrc !== "") {
+    camOpacity = 0.8;
+  }
+
   return (
     <View style={{ flex: 1 }}>
+      <View
+        style={{ ...StyleSheet.absoluteFillObject, backgroundColor: "black" }}
+      ></View>
       <Camera
-        style={{ flex: 1 }}
+        style={{ flex: 1, opacity: camOpacity }}
         type={state.type}
         ratio="2:1"
-        ref={(ref) => (camera = ref)}
+        // autoFocus={true}
+        // pictureSize="640x480"
+        ref={async (ref) => (camera = ref)}
       >
         <TouchableWithoutFeedback onPressIn={onPressIn} onPressOut={onPressOut}>
           <View
@@ -169,7 +199,7 @@ export default function App() {
         </>
       ) : null}
 
-      {/* <ProgressIndicator /> */}
+      {pressed && state.currImgSrc === "" ? <ProgressIndicator /> : null}
     </View>
   );
 }
