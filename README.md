@@ -4,6 +4,8 @@ An AR+ML prototype that allows cutting elements from your surroundings and pasti
 
 Although only Photoshop is being handled currently, it may handle different outputs in the future.
 
+Demo & more infos: [Thread](https://twitter.com/cyrildiagne/status/1256916982764646402)
+
 ⚠️ This is a research prototype and not a consumer / photoshop user tool.
 
 ## Modules
