@@ -47,6 +47,7 @@ export default function App() {
   } as State);
 
   const [pressed, setPressed] = useState(false);
+  const [pasting, setPasting] = useState(false);
 
   let camera: any = null;
 
@@ -144,10 +145,12 @@ export default function App() {
 
   async function onPressOut() {
     setPressed(false);
+    setPasting(true);
 
     if (state.currImgSrc !== "") {
       await paste();
       setState({ ...state, currImgSrc: "" });
+      setPasting(false);
     }
   }
 
@@ -172,7 +175,7 @@ export default function App() {
         style={{ flex: 1, opacity: camOpacity }}
         type={state.type}
         ratio="2:1"
-        // autoFocus={true}
+        // autoFocus={false}
         // pictureSize="640x480"
         ref={async (ref) => (camera = ref)}
       >
@@ -199,7 +202,7 @@ export default function App() {
         </>
       ) : null}
 
-      {pressed && state.currImgSrc === "" ? <ProgressIndicator /> : null}
+      {(pressed && state.currImgSrc === "") || pasting ? <ProgressIndicator /> : null}
     </View>
   );
 }

@@ -91,7 +91,7 @@ def save():
 
     # TODO: currently hack to manually scale up the images. Ideally this would
     # be done respective to the view distance from the screen.
-    img_scaled = img.resize((img.size[0] * 2, img.size[1] * 2))
+    img_scaled = img.resize((img.size[0] * 3, img.size[1] * 3))
 
     # Save locally.
     logging.info(' > saving final image...')

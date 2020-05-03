@@ -3,10 +3,11 @@ from photoshop import PhotoshopConnection
 # TODO: This offset should be detected by getTopLeft() but the new version
 # of Photoshop doesn't seem to support executeActionGet so we put it
 # manually here in the meantime.
-DOC_OFFSET_X = 440
-DOC_OFFSET_Y = 240
-DOC_WIDTH = 1697
-DOC_HEIGHT = 1024
+SCREEN_PIXELS_DENSITY = 2
+DOC_OFFSET_X = 74 * SCREEN_PIXELS_DENSITY
+DOC_OFFSET_Y = 130 * SCREEN_PIXELS_DENSITY
+DOC_WIDTH = 2121
+DOC_HEIGHT = 1280
 
 def paste(filename, name, x, y, password='123456'):
 
@@ -25,7 +26,11 @@ def paste(filename, name, x, y, password='123456'):
             doc.paste();
             doc.activeLayer.name = layerName;
             doc.activeLayer.translate(x, y);
-            doc.activeLayer.move(doc.layers[0], ElementPlacement.PLACEBEFORE);
+            try {
+                doc.activeLayer.move(doc.layers[doc.layers.length - 1], ElementPlacement.PLACEBEFORE);
+            } catch(e) {
+                alert(e);
+            }
         }
         function getTopLeft() {
             try {
