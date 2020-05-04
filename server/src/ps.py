@@ -10,7 +10,11 @@ DOC_WIDTH = 2121
 DOC_HEIGHT = 1280
 
 def paste(filename, name, x, y, password='123456'):
-
+    
+    # There seem to be a bug on Windows where the path must be using unix separators.
+    # https://github.com/cyrildiagne/ar-cutpaste/issues/5
+    filename = filename.replace('\\', '/')
+    
     with PhotoshopConnection(password=password) as conn:
         script = """
         function pasteImage(filename, layerName, x, y) {
