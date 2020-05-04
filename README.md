@@ -32,7 +32,6 @@ This prototype runs as 3 independent modules:
 ### 1 - Configure Photoshop
 
 - Go to "Preferences > Plug-ins", enable "Remote Connection" and set a friendly password that you'll need later.
-- Make sure that your PS document settings match those in ```server/src/ps.py```, otherwise only an empty layer will be pasted.
 
 <!--
 ### 2) Setup the local server
