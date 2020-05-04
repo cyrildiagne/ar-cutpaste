@@ -10,7 +10,7 @@ function arrayBufferToBase64(buffer: ArrayBuffer) {
 }
 
 function ping() {
-  fetch(URL + "/ping");
+  fetch(URL + "/ping").catch((e) => console.error(e));
 }
 
 async function cut(imageURI: string) {
