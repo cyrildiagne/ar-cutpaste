@@ -77,7 +77,6 @@ export default function App() {
   async function cut(): Promise<string> {
     const start = Date.now();
     console.log("");
-    console.log("ping pong ?");
     console.log("Cut");
 
     console.log(camera.pictureSize);
