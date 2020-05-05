@@ -163,7 +163,6 @@ export default function App() {
 
     if (state.currImgSrc !== "") {
       await paste();
-      //
       setPasting(false);
     }
   }
