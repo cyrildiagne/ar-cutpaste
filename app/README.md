@@ -1,6 +1,7 @@
 # AR Cut Paste Mobile App
 
-A [React Native](#) mobile application.
+An [Expo](expo.io) / [React Native](#) mobile application.
+Please follow instructions from the [expo website](https://expo.io/learn) to see how to preview the app on your phone using the Expo app.
 
 ## Setup
 
