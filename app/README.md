@@ -5,17 +5,17 @@ Please follow instructions from the [expo website](https://expo.io/learn) to see
 
 ## Setup
 
-```bash
+```console
 npm install
 ```
 
-Then update the IP address in `components/Server.txt` to point to the IP address of the computer running the local server:
-```js
+Then update the IP address in `components/Server.tsx` to point to the IP address of the computer running the local server:
+```typescript
 3: const URL = "http://192.168.1.29:8080";
 ```
 
 ## Run
 
-```bash
+```console
 npm start
 ```
