@@ -165,9 +165,11 @@ def paste():
         logging.info(' > sending to photoshop...')
         name = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
         img_path = os.path.join(os.getcwd(), 'cut_current.png')
-        if not ps.paste(img_path, name, x, y, password=args.photoshop_password):
-            logging.error('Something went wrong with the photoshop script execution')
-            return
+        err = ps.paste(img_path, name, x, y, password=args.photoshop_password)
+        if err is not None:
+            logging.error('error sending to photoshop')
+            logging.error(err)
+            jsonify({'status': 'error sending to photoshop'})
     else:
         logging.info('screen not found')
 
