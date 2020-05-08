@@ -51,6 +51,8 @@ BASNet model (Qin & al, CVPR 2019) as an external HTTP service using this [BASNe
 
 - You will need the deployed service URL to configure the local server
 
+- Make sure to configure a different port if you're running BASNet on the same computer as the local service
+
 ### 3 - Configure and run the local server
 
 - Follow the instructions in [/server](/server) to setup & run the local server.
