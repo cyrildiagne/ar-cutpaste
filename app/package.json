@@ -15,12 +15,13 @@
     "expo-gl": "~8.1.0",
     "expo-image-manipulator": "~8.1.0",
     "expo-permissions": "~8.1.0",
+    "mem": "^4.0.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
     "react-native-screens": "~2.2.0",
-    "react-native-web": "~0.11.7",
-    "react-native-svg": "11.0.1"
+    "react-native-svg": "11.0.1",
+    "react-native-web": "~0.11.7"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
