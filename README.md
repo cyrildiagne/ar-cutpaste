@@ -33,6 +33,7 @@ This prototype runs as 3 independent modules:
 
 - Go to "Preferences > Plug-ins", enable "Remote Connection" and set a friendly password that you'll need later.
 - Make sure that your PS document settings match those in ```server/src/ps.py```, otherwise only an empty layer will be pasted.
+- Also make sure that your document has some sort of background. If the background is just blank, SIFT will probably not have enough feature to do a correct match.
 
 <!--
 ### 2) Setup the local server
