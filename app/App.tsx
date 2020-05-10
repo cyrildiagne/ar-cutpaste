@@ -82,12 +82,10 @@ export default function App() {
     const { uri } = await ImageManipulator.manipulateAsync(
       photo.uri,
       [
-        { resize: { width: 256, height: 512 } },
-        { crop: { originX: 0, originY: 128, width: 256, height: 256 } },
-        // { resize: { width: 256, height: 457 } },
-        // { crop: { originX: 0, originY: 99, width: 256, height: 256 } },
-        // { resize: { width: 256, height: 341 } },
-        // { crop: { originX: 0, originY: 42, width: 256, height: 256 } },
+        { resize: { width: 512, height: 1024 } },
+        { crop: { originX: 0, originY: 256, width: 512, height: 512 } },
+        // { resize: { width: 256, height: 512 } },
+        // { crop: { originX: 0, originY: 128, width: 256, height: 256 } },
       ]
       // { compress: 0, format: ImageManipulator.SaveFormat.JPEG, base64: false }
     );
