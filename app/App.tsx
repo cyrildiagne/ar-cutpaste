@@ -31,11 +31,14 @@ const styles = StyleSheet.create({
   },
 });
 
+type AppState = "Init" | "CopyReady" | "PasteReady" | "Busy"
+
 interface State {
   hasPermission: boolean;
   type: any;
   camera: any;
-  currImgSrc: string | null;
+  appState: AppState;
+  currImgSrc: string;
 }
 
 export default function App() {
@@ -43,11 +46,9 @@ export default function App() {
     hasPermission: false,
     type: Camera.Constants.Type.back,
     camera: null,
+    appState: "Init",
     currImgSrc: "",
   } as State);
-
-  const [pressed, setPressed] = useState(false);
-  const [pasting, setPasting] = useState(false);
 
   let camera: any = null;
 
@@ -58,7 +59,7 @@ export default function App() {
       // Request permission.
       const { status } = await Camera.requestPermissionsAsync();
       const hasPermission = status === "granted" ? true : false;
-      setState({ ...state, hasPermission });
+      setState({ ...state, hasPermission, appState: "CopyReady" });
     })();
   }, []);
 
@@ -131,24 +132,15 @@ export default function App() {
   }
 
   async function onPressIn() {
-    setPressed(true);
-
-    const resp = await cut();
-
-    // Check if we're still pressed.
-    // if (pressed) {
-    setState({ ...state, currImgSrc: resp });
-    // }
-  }
-
-  async function onPressOut() {
-    setPressed(false);
-    setPasting(true);
-
-    if (state.currImgSrc !== "") {
+    console.log("PressedIn");
+    if(state.appState == "CopyReady") {        
+      setState({ ...state, appState: "Busy" });
+      const resp = await cut();
+      setState({ ...state, currImgSrc: resp, appState: resp != "" ? "PasteReady" : "CopyReady" });
+    } else if(state.appState == "PasteReady") {
+      setState({ ...state, appState: "Busy" });
       await paste();
-      setState({ ...state, currImgSrc: "" });
-      setPasting(false);
+      setState({ ...state, currImgSrc: "", appState: "CopyReady" });
     }
   }
 
@@ -160,7 +152,7 @@ export default function App() {
   }
 
   let camOpacity = 1;
-  if (pressed && state.currImgSrc !== "") {
+  if (state.appState == "PasteReady") {
     camOpacity = 0.8;
   }
 
@@ -177,7 +169,7 @@ export default function App() {
         // pictureSize="640x480"
         ref={async (ref) => (camera = ref)}
       >
-        <TouchableWithoutFeedback onPressIn={onPressIn} onPressOut={onPressOut}>
+        <TouchableWithoutFeedback onPressIn={onPressIn}>
           <View
             style={{
               flex: 1,
@@ -188,7 +180,7 @@ export default function App() {
         </TouchableWithoutFeedback>
       </Camera>
 
-      {pressed && state.currImgSrc !== "" ? (
+      {state.appState == "PasteReady" ? (
         <>
           <View pointerEvents="none" style={styles.resultImgView}>
             <Image
@@ -200,7 +192,7 @@ export default function App() {
         </>
       ) : null}
 
-      {(pressed && state.currImgSrc === "") || pasting ? <ProgressIndicator /> : null}
+      {state.appState == "Busy" ? <ProgressIndicator /> : null}
     </View>
   );
 }
