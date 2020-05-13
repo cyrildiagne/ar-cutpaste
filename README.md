@@ -8,6 +8,8 @@ Demo & more infos: [Thread](https://twitter.com/cyrildiagne/status/1256916982764
 
 ⚠️ This is a research prototype and not a consumer / photoshop user tool.
 
+**Update 2020.05.11:** If you're looking for an easy to use app based on this research, head over to https://arcopypaste.app
+
 ## Modules
 
 This prototype runs as 3 independent modules:
