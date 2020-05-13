@@ -1,6 +1,7 @@
 import Base64 from "./Base64";
+import Constants from 'expo-constants';
 
-const URL = "http://192.168.1.29:8080";
+const URL = Constants.manifest.extra.serverUrl;
 
 function arrayBufferToBase64(buffer: ArrayBuffer) {
   let binary = "";
