@@ -48,12 +48,20 @@ pip install -r requirements.txt
 
 ### 2 - Setup the external salience object detection service
 
+#### Option 1: Set up your own model service (requires a CUDA GPU)
+
 - As mentioned above, for the time being, you must deploy the
 BASNet model (Qin & al, CVPR 2019) as an external HTTP service using this [BASNet-HTTP wrapper](https://github.com/cyrildiagne/basnet-http) (requires a CUDA GPU)
 
 - You will need the deployed service URL to configure the local server
 
 - Make sure to configure a different port if you're running BASNet on the same computer as the local service
+
+#### Option 2: Use a community provided endpoint
+
+A public endpoint has been provided by members of the community. This is useful if you don't have your own CUDA GPU or do not want to go through the process of running the servce on your own.
+
+Use this endpoint by launching the local server with `--basnet_service_ip http://u2net-predictor.tenant-compass.global.coreweave.com`
 
 ### 3 - Configure and run the local server
 
@@ -67,3 +75,4 @@ BASNet model (Qin & al, CVPR 2019) as an external HTTP service using this [BASNe
 
 - [BASNet code](https://github.com/NathanUA/BASNet) for '[*BASNet: Boundary-Aware Salient Object Detection*](http://openaccess.thecvf.com/content_CVPR_2019/html/Qin_BASNet_Boundary-Aware_Salient_Object_Detection_CVPR_2019_paper.html) [code](https://github.com/NathanUA/BASNet)', [Xuebin Qin](https://webdocs.cs.ualberta.ca/~xuebin/), [Zichen Zhang](https://webdocs.cs.ualberta.ca/~zichen2/), [Chenyang Huang](https://chenyangh.com/), [Chao Gao](https://cgao3.github.io/), [Masood Dehghan](https://sites.google.com/view/masoodd) and [Martin Jagersand](https://webdocs.cs.ualberta.ca/~jag/)
 - RunwayML for the [Photoshop paste code](https://github.com/runwayml/RunwayML-for-Photoshop/blob/master/host/index.jsx)
+- [CoreWeave](https://www.coreweave.com) for hosting the public U^2Net model endpoint on Tesla V100s
