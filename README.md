@@ -1,10 +1,10 @@
 # AR Cut & Paste
 
-An AR+ML prototype that allows cutting elements from your surroundings and pasting them in an image editing software.
+An AR+ML prototype that allows cutting elements from your surroundings and pasting them in image editing software.
 
 Although only Photoshop is being handled currently, it may handle different outputs in the future.
 
-Demo & more infos: [Thread](https://twitter.com/cyrildiagne/status/1256916982764646402)
+Demo & more info: [Thread](https://twitter.com/cyrildiagne/status/1256916982764646402)
 
 ⚠️ This is a research prototype and not a consumer / photoshop user tool.
 
