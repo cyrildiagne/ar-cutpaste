@@ -40,7 +40,8 @@ This prototype runs as 3 independent modules:
 <!--
 ### 2) Setup the local server
 
-```bash
+```
+bash
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
