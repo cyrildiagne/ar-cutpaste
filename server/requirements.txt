@@ -3,5 +3,5 @@ photoshop-connection==0.1.1
 Flask==1.1.1
 flask-cors==3.0.8
 pyscreenshot==1.0
-Pillow==7.1.2
+Pillow==8.2.0
 requests==2.23.0
