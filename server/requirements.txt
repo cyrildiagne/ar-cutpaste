@@ -1,7 +1,7 @@
 screenpoint==0.1.1
 photoshop-connection==0.1.1
 Flask==1.1.1
-flask-cors==3.0.8
+flask-cors==3.0.9
 pyscreenshot==1.0
 Pillow==8.3.2
 requests==2.23.0
