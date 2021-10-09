@@ -10,7 +10,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { Camera } from "expo-camera";
 
 import ProgressIndicator from "./components/ProgressIndicator";
-import server from "./components/Server";
+import Server from "./components/Server";
 
 const styles = StyleSheet.create({
   resultImgView: {
@@ -54,7 +54,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       // Ping the server on startup.
-      server.ping();
+      Server.ping();
       // Request permission.
       const { status } = await Camera.requestPermissionsAsync();
       const hasPermission = status === "granted" ? true : false;
@@ -93,7 +93,7 @@ export default function App() {
     );
 
     console.log("> sending to /cut...");
-    const resp = await server.cut(uri);
+    const resp = await Server.cut(uri);
 
     console.log(`Done in ${((Date.now() - start) / 1000).toFixed(3)}s`);
     return resp;
@@ -117,7 +117,7 @@ export default function App() {
 
     console.log("> sending to /paste...");
     try {
-      const resp = await server.paste(uri);
+      const resp = await Server.paste(uri);
       if (resp.status !== "ok") {
         if (resp.status === "screen not found") {
           console.log("screen not found");
