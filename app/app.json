@@ -15,6 +15,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "serverUrl": "http://<ip>:<port>",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
