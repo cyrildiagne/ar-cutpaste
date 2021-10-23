@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Text,
   View,
   Image,
   TouchableWithoutFeedback,
   StyleSheet,
+  Animated,
 } from "react-native";
 import * as ImageManipulator from "expo-image-manipulator";
 import { Camera } from "expo-camera";
@@ -48,6 +49,7 @@ export default function App() {
 
   const [pressed, setPressed] = useState(false);
   const [pasting, setPasting] = useState(false);
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   let camera: any = null;
 
@@ -61,6 +63,16 @@ export default function App() {
       setState({ ...state, hasPermission });
     })();
   }, []);
+
+  const fadeOut = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 1000,
+    }).start(({ finished }) => {
+      setState({ ...state, currImgSrc: "" });
+      fadeAnim.setValue(1);
+    });
+  };
 
   async function cut(): Promise<string> {
     const start = Date.now();
@@ -146,10 +158,10 @@ export default function App() {
   async function onPressOut() {
     setPressed(false);
     setPasting(true);
+    fadeOut();
 
     if (state.currImgSrc !== "") {
       await paste();
-      setState({ ...state, currImgSrc: "" });
       setPasting(false);
     }
   }
@@ -190,19 +202,24 @@ export default function App() {
         </TouchableWithoutFeedback>
       </Camera>
 
-      {pressed && state.currImgSrc !== "" ? (
+      {state.currImgSrc !== "" ? (
         <>
-          <View pointerEvents="none" style={styles.resultImgView}>
+          <Animated.View
+            pointerEvents="none"
+            style={[styles.resultImgView, { opacity: fadeAnim }]}
+          >
             <Image
               style={styles.resultImg}
               source={{ uri: state.currImgSrc }}
               resizeMode="stretch"
             />
-          </View>
+          </Animated.View>
         </>
       ) : null}
 
-      {(pressed && state.currImgSrc === "") || pasting ? <ProgressIndicator /> : null}
+      {(pressed && state.currImgSrc === "") || pasting ? (
+        <ProgressIndicator />
+      ) : null}
     </View>
   );
 }
